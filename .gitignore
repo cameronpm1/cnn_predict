@@ -1,0 +1,6 @@
+cnn_predict/
+data/
+videos/
+**/__pycache__/
+datainfo/
+logs/
