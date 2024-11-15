@@ -14,7 +14,7 @@ from torch.utils.data import DataLoader
 from torchvision.utils import save_image
 from dataset import (DynamicImageDatasetStep,
                      LatentDynamicImageDatasetConstant)
-from model_utils import (EncoderDecoder,
+from model_archs import (EncoderDecoder,
                          EncoderDecoder64x1x1,
                          RefineDoublePendulumModel,
                          RefineSinglePendulumModel,
@@ -81,30 +81,10 @@ class VisLatentDynamicsModel(pl.LightningModule):
             self.model = LatentPredModel(in_channels=4)
             self.high_dim_model = EncoderDecoder64x1x1(in_channels=3)
             self.refine_model = RefineDoublePendulumModel(in_channels=64)
-        if self.hparams.model_name == 'latent-prediction' and self.hparams.dataset == 'elastic_pendulum':
+        if self.hparams.model_name == 'latent-prediction' and self.hparams.dataset == 'cube_2d':
             self.model = LatentPredModel(in_channels=6)
             self.high_dim_model = EncoderDecoder64x1x1(in_channels=3)
             self.refine_model = RefineElasticPendulumModel(in_channels=64)
-        if self.hparams.model_name == 'latent-prediction' and self.hparams.dataset == 'swingstick_non_magnetic':
-            self.model = LatentPredModel(in_channels=4)
-            self.high_dim_model = EncoderDecoder64x1x1(in_channels=3)
-            self.refine_model = RefineSwingStickNonMagneticModel(in_channels=64)
-        if self.hparams.model_name == 'latent-prediction' and self.hparams.dataset == 'air_dancer':
-            self.model = LatentPredModel(in_channels=8)
-            self.high_dim_model = EncoderDecoder64x1x1(in_channels=3)
-            self.refine_model = RefineAirDancerModel(in_channels=64)
-        if self.hparams.model_name == 'latent-prediction' and self.hparams.dataset == 'lava_lamp':
-            self.model = LatentPredModel(in_channels=8)
-            self.high_dim_model = EncoderDecoder64x1x1(in_channels=3)
-            self.refine_model = RefineLavaLampModel(in_channels=64)
-        if self.hparams.model_name == 'latent-prediction' and self.hparams.dataset == 'fire':
-            self.model = LatentPredModel(in_channels=24)
-            self.high_dim_model = EncoderDecoder64x1x1(in_channels=3)
-            self.refine_model = RefineFireModel(in_channels=64)
-        if self.hparams.model_name == 'latent-prediction' and self.hparams.dataset == 'reaction_diffusion':
-            self.model = LatentPredModel(in_channels=2)
-            self.high_dim_model = EncoderDecoder64x1x1(in_channels=3)
-            self.refine_model = RefineReactionDiffusionModel(in_channels=64)
         # loss
         self.loss_func = nn.MSELoss()
     

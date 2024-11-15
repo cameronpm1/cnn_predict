@@ -5,10 +5,12 @@ import torch
 import pprint
 from munch import munchify
 from datetime import datetime
-from models import VisDynamicsModel
 from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks import ModelCheckpoint
+from pytorch_lightning.accelerators import find_usable_cuda_devices
+
+from models import VisDynamicsModel
 
 def mkdir(folder):
     if os.path.exists(folder):
@@ -74,10 +76,11 @@ def main(config_filepath):
     logger = TensorBoardLogger(tb_log_dir, name=dt_string)
 
     # define trainer
-    trainer = Trainer(logger=logger,
+    trainer = Trainer(accelerator="cuda", 
+                      devices=find_usable_cuda_devices(1),
+                      logger=logger,
                       max_epochs=cfg.epochs,
                       deterministic=True,
-                      accelerator='cpu',
                       default_root_dir=log_dir,
                       val_check_interval=1.0,
                       callbacks=checkpoint_callback
@@ -127,8 +130,8 @@ def main_latentpred(config_filepath,):
         prefix='')
 
     # define trainer
-    trainer = Trainer(gpus=cfg.num_gpus,
-                      max_epochs=cfg.epochs,
+    trainer = Trainer(max_epochs=cfg.epochs,
+                      devices=find_usable_cuda_devices(1),
                       deterministic=True,
                       accelerator='ddp',
                       amp_backend='native',

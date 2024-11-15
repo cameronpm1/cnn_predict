@@ -200,7 +200,7 @@ if __name__ == '__main__':
     sim = 'cube_2d'
 
     config_filepath = 'configs/'+sim+'/model64/config1.yaml'
-    ckpt_filepath = '/home/cameron/cnn_predict/logs/_cube_2d/video1_encoder-decoder-64_1/lightning_logs/checkpoints/{epoch}_{val_loss}/'
-
-    #gather_latent_from_trained_high_dim_model(config_filepath,ckpt_filepath)
-    main(config_filepath,ckpt_filepath)
+    #ckpt_filepath = '/home/cameron/cnn_predict/logs/_cube_2d/video1_encoder-decoder-64_1/lightning_logs/checkpoints/{epoch}_{val_loss}/'
+    ckpt_filepath = '/home/cameron/cnn_predict/logs/_cube_2d/video2_encoder-decoder-64_1/lightning_logs/checkpoints/{epoch}_{val_loss}/'
+    gather_latent_from_trained_high_dim_model(config_filepath,ckpt_filepath)
+    #main(config_filepath,ckpt_filepath)
